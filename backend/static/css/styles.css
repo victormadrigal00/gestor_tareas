@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f6ff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 360px;
+    margin: 80px auto;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    border-top: 6px solid #1f5eff; /* azul predominante */
+}
+
+h1 {
+    margin-top: 0;
+    text-align: center;
+    color: #1f5eff;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfd8ff;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    margin-top: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #1f5eff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1747c2;
+}
+
+#mensaje {
+    margin-top: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.link {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.link a {
+    color: #1f5eff;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* Para más adelante: tareas completadas en verde */
+.completada {
+    color: #0a8a2a;
+    font-weight: bold;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.task-card {
+    border: 1px solid #cfd8ff;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    background: #ffffff;
+}
+
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.task-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 110px;
+}
+
+.btn-secondary {
+    background: #e6ecff;
+    color: #1747c2;
+    border: 1px solid #cfd8ff;
+}
+
+.btn-secondary:hover {
+    background: #d7e1ff;
+}
+
+.btn-danger {
+    background: #ffebee;
+    color: #b71c1c;
+    border: 1px solid #ffcdd2;
+}
+
+.btn-danger:hover {
+    background: #ffd7dc;
+}
+
+.pendiente {
+    color: #555;
+    font-weight: bold;
+}
+

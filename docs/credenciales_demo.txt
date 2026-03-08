@@ -1,0 +1,10 @@
+USUARIO DE DEMOSTRACIÓN – GESTOR DE TAREAS
+
+Para la comprobación del funcionamiento del proyecto se ha creado
+un usuario de prueba con las siguientes credenciales:
+
+Email: demo@demo.com
+Contraseña: 1234
+
+Este usuario se utiliza exclusivamente con fines de evaluación
+y demostración del sistema.
