@@ -1,134 +1,318 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f6ff;
+/* =========================================
+   ESTILO DASHBOARD PROFESIONAL COMPLETO
+   ========================================= */
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --radius: 16px;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    width: 360px;
-    margin: 80px auto;
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-    border-top: 6px solid #1f5eff; /* azul predominante */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top right, #e2e8f0, #f8fafc);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
 }
 
-h1 {
-    margin-top: 0;
-    text-align: center;
-    color: #1f5eff;
+/* CONTENEDOR PRINCIPAL (GRID) */
+.dashboard-container {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+}
+
+/* COLUMNA IZQUIERDA: SIDEBAR */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: var(--surface);
+    padding: 25px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    border-left: 6px solid var(--primary); /* Azul por defecto */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stat-box small {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-box p {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+/* COLUMNA DERECHA: CONTENIDO */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 label {
-    display: block;
-    margin-top: 12px;
-    margin-bottom: 6px;
-    color: #1a1a1a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-light);
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cfd8ff;
-    border-radius: 6px;
-    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
-button {
-    width: 100%;
-    margin-top: 16px;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    background: #1f5eff;
+input:focus {
+    border-color: var(--primary);
+}
+
+.btn-add {
+    background: var(--primary);
     color: white;
-    font-size: 16px;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
-button:hover {
-    background: #1747c2;
+.btn-add:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
 }
 
-#mensaje {
-    margin-top: 12px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.link {
-    margin-top: 12px;
-    text-align: center;
-}
-
-.link a {
-    color: #1f5eff;
-    text-decoration: none;
-}
-
-.link a:hover {
-    text-decoration: underline;
-}
-
-/* Para más adelante: tareas completadas en verde */
-.completada {
-    color: #0a8a2a;
-    font-weight: bold;
-}
-
-.topbar {
+/* --- ESTILO DE LAS TARJETAS DE TAREAS (LISTA) --- */
+#tasksList {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .task-card {
-    border: 1px solid #cfd8ff;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 10px;
-    background: #ffffff;
+    background: var(--surface);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--primary); /* Borde Azul (Pendiente) */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.task-card:hover {
+    transform: translateX(5px);
+}
+
+/* Clase que aplicas con JS cuando t.completada es true */
+.task-completed {
+    border-left-color: var(--success) !important; /* Borde Verde (Completada) */
+    background: #fcfdfd;
 }
 
 .task-row {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    align-items: center;
 }
 
+.task-title {
+    font-weight: 800;
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+}
+
+.task-desc {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+/* Etiquetas pequeñas de estado */
+.estado-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.pendiente { background: #e0e7ff; color: #4338ca; }
+.completada { background: #dcfce7; color: #15803d; }
+
+/* Botones de acción (Editar, Completar, Borrar) */
 .task-actions {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 110px;
+    gap: 10px;
 }
 
 .btn-secondary {
-    background: #e6ecff;
-    color: #1747c2;
-    border: 1px solid #cfd8ff;
-}
-
-.btn-secondary:hover {
-    background: #d7e1ff;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
 .btn-danger {
-    background: #ffebee;
-    color: #b71c1c;
-    border: 1px solid #ffcdd2;
+    background: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.btn-danger:hover {
-    background: #ffd7dc;
+.btn-secondary:hover { background: #e2e8f0; }
+.btn-danger:hover { background: #ef4444; color: white; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .sidebar .card:first-child { grid-column: span 2; }
 }
 
-.pendiente {
-    color: #555;
-    font-weight: bold;
+@media (max-width: 600px) {
+    .sidebar { grid-template-columns: 1fr; }
+    .sidebar .card:first-child { grid-column: span 1; }
+    .task-row { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .task-actions { width: 100%; justify-content: flex-end; }
+}
+/* =========================================
+   ESTILOS PARA MODALES (NUEVO)
+   ========================================= */
+
+/* Fondo oscuro detrás del modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
 }
 
+/* Clase que activa el modal (se añade con JS) */
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* La tarjeta del modal en sí */
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    transform: translateY(-20px); /* Pequeña animación de entrada */
+    transition: transform 0.3s ease;
+    padding: 30px !important; /* Más padding interno */
+}
+
+.modal-overlay.open .modal-content {
+    transform: translateY(0);
+}
+
+/* Cabecera del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+/* Botón 'X' para cerrar */
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--danger);
+}
+
+/* Cuerpo y Footer del modal */
+.modal-body {
+    margin-bottom: 25px;
+}
+
+.modal-footer {
+    justify-content: flex-end; /* Botones a la derecha */
+}
+
+/* Estilo especial para el modal de borrado */
+.delete-confirm {
+    border-top: 6px solid var(--danger) !important;
+}

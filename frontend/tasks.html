@@ -7,30 +7,38 @@
 </head>
 <body>
 
+
     <div class="container">
         <h1>Mis tareas</h1>
+
 
         <div class="topbar">
             <span id="usuarioInfo"></span>
             <button id="logoutBtn">Cerrar sesión</button>
         </div>
 
+
         <h2>Nueva tarea</h2>
         <form id="taskForm">
             <label for="titulo">Título</label>
             <input type="text" id="titulo" required>
 
+
             <label for="descripcion">Descripción</label>
             <input type="text" id="descripcion">
+
 
             <button type="submit">Añadir tarea</button>
         </form>
 
+
         <p id="mensaje"></p>
+
 
         <h2>Lista de tareas</h2>
         <div id="tasksList"></div>
     </div>
+
 
     <script src="js/tasks.js"></script>
 </body>

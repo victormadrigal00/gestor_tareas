@@ -5,6 +5,7 @@ body {
     padding: 0;
 }
 
+
 .container {
     width: 360px;
     margin: 80px auto;
@@ -15,11 +16,13 @@ body {
     border-top: 6px solid #1f5eff; /* azul predominante */
 }
 
+
 h1 {
     margin-top: 0;
     text-align: center;
     color: #1f5eff;
 }
+
 
 label {
     display: block;
@@ -28,6 +31,7 @@ label {
     color: #1a1a1a;
 }
 
+
 input {
     width: 100%;
     padding: 10px;
@@ -35,6 +39,7 @@ input {
     border-radius: 6px;
     box-sizing: border-box;
 }
+
 
 button {
     width: 100%;
@@ -48,9 +53,11 @@ button {
     cursor: pointer;
 }
 
+
 button:hover {
     background: #1747c2;
 }
+
 
 #mensaje {
     margin-top: 12px;
@@ -58,25 +65,30 @@ button:hover {
     font-weight: bold;
 }
 
+
 .link {
     margin-top: 12px;
     text-align: center;
 }
+
 
 .link a {
     color: #1f5eff;
     text-decoration: none;
 }
 
+
 .link a:hover {
     text-decoration: underline;
 }
+
 
 /* Para más adelante: tareas completadas en verde */
 .completada {
     color: #0a8a2a;
     font-weight: bold;
 }
+
 
 .topbar {
     display: flex;
@@ -86,6 +98,7 @@ button:hover {
     margin-bottom: 16px;
 }
 
+
 .task-card {
     border: 1px solid #cfd8ff;
     border-radius: 8px;
@@ -94,11 +107,13 @@ button:hover {
     background: #ffffff;
 }
 
+
 .task-row {
     display: flex;
     justify-content: space-between;
     gap: 12px;
 }
+
 
 .task-actions {
     display: flex;
@@ -107,15 +122,18 @@ button:hover {
     min-width: 110px;
 }
 
+
 .btn-secondary {
     background: #e6ecff;
     color: #1747c2;
     border: 1px solid #cfd8ff;
 }
 
+
 .btn-secondary:hover {
     background: #d7e1ff;
 }
+
 
 .btn-danger {
     background: #ffebee;
@@ -123,9 +141,11 @@ button:hover {
     border: 1px solid #ffcdd2;
 }
 
+
 .btn-danger:hover {
     background: #ffd7dc;
 }
+
 
 .pendiente {
     color: #555;

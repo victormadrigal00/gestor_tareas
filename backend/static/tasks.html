@@ -2,34 +2,88 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tareas - Gestor de Tareas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tareas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="card" style="text-align: center;">
+                <h2 style="margin:0; font-size: 1.2rem; color: var(--primary);">Gestor de Tareas</h2>
+                <p id="mensaje" style="font-size: 0.85rem; margin-top: 10px; font-weight: 600;">Cargando...</p>
+            </div>
+            
+            <div class="stat-box">
+                <small>TOTAL TAREAS</small>
+                <p id="total-count" style="font-size: 1.8rem; font-weight: 800; margin: 5px 0;">0</p>
+            </div>
+            
+            <div class="stat-box" style="border-left-color: #22c55e;">
+                <small>COMPLETADAS</small>
+                <p id="completed-count" style="font-size: 1.8rem; font-weight: 800; margin: 5px 0;">0</p>
+            </div>
 
-    <div class="container">
-        <h1>Mis tareas</h1>
+            <button id="logoutBtn" style="background:none; border:none; color:var(--danger); cursor:pointer; font-weight:bold; margin-top: 10px;">Cerrar Sesión</button>
+        </aside>
 
-        <div class="topbar">
-            <span id="usuarioInfo"></span>
-            <button id="logoutBtn">Cerrar sesión</button>
+        <main class="main-content">
+            <section class="card">
+                <h3 style="margin-top:0">Añadir Nueva Tarea</h3>
+                <form id="taskForm" class="form-group">
+                    <label style="font-size: 0.8rem; font-weight: 700;">TÍTULO</label>
+                    <input type="text" id="titulo" placeholder="¿Qué hay que hacer?" required>
+                    
+                    <label style="font-size: 0.8rem; font-weight: 700;">DESCRIPCIÓN</label>
+                    <input type="text" id="descripcion" placeholder="Añade más detalles...">
+                    
+                    <button type="submit" class="btn-add">Guardar Tarea</button>
+                </form>
+            </section>
+
+            <h3 style="margin: 20px 0 10px 0;">Mis Tareas</h3>
+            <div id="tasksList">
+                <p style="color: var(--text-light);">Cargando tus tareas...</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h3>Editar Tarea</h3>
+                <button class="close-modal" onclick="cerrarModal('editModal')">&times;</button>
+            </div>
+            <div class="modal-body form-group">
+                <input type="hidden" id="editTaskId">
+                <label>TÍTULO</label>
+                <input type="text" id="editTitulo" required>
+                <label>DESCRIPCIÓN</label>
+                <input type="text" id="editDescripcion">
+            </div>
+            <div class="modal-footer task-actions">
+                <button class="btn-secondary" onclick="cerrarModal('editModal')">Cancelar</button>
+                <button class="btn-add" onclick="guardarEdicion()">Guardar Cambios</button>
+            </div>
         </div>
+    </div>
 
-        <h2>Nueva tarea</h2>
-        <form id="taskForm">
-            <label for="titulo">Título</label>
-            <input type="text" id="titulo" required>
-
-            <label for="descripcion">Descripción</label>
-            <input type="text" id="descripcion">
-
-            <button type="submit">Añadir tarea</button>
-        </form>
-
-        <p id="mensaje"></p>
-
-        <h2>Lista de tareas</h2>
-        <div id="tasksList"></div>
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal-content card delete-confirm">
+            <div class="modal-header">
+                <h3 style="color: var(--danger);">⚠ Confirmar Borrado</h3>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="deleteTaskId">
+                <p>¿Seguro que quieres borrar la tarea <strong id="deleteTaskTitle"></strong>?</p>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 5px;">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer task-actions">
+                <button class="btn-secondary" onclick="cerrarModal('deleteModal')">Cancelar</button>
+                <button class="btn-danger" onclick="confirmarBorrado()">Borrar Definitivamente</button>
+            </div>
+        </div>
     </div>
 
     <script src="js/tasks.js"></script>

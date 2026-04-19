@@ -3,9 +3,15 @@ const taskForm = document.getElementById("taskForm");
 const mensaje = document.getElementById("mensaje");
 const logoutBtn = document.getElementById("logoutBtn");
 
+// IDs de los nuevos modales
+const editModal = document.getElementById('editModal');
+const deleteModal = document.getElementById('deleteModal');
+
 function setMensaje(texto, ok = true) {
     mensaje.textContent = texto;
     mensaje.style.color = ok ? "green" : "red";
+    // Limpiar mensaje tras 4 segundos
+    setTimeout(() => mensaje.textContent = "Sesión activa", 4000);
 }
 
 async function apiFetch(url, options = {}) {
@@ -33,16 +39,21 @@ async function cargarTareas() {
 }
 
 function renderTasks(tareas) {
+    // Actualizar contadores
+    const completadasCount = tareas.filter(t => t.completada).length;
+    document.getElementById('total-count').textContent = tareas.length;
+    document.getElementById('completed-count').textContent = completadasCount;
+
     tasksList.innerHTML = "";
 
     if (!tareas || tareas.length === 0) {
-        tasksList.innerHTML = "<p>No hay tareas todavía.</p>";
+        tasksList.innerHTML = "<p style='color: #64748b;'>No hay tareas todavía. ¡Empieza añadiendo una!</p>";
         return;
     }
 
     tareas.forEach((t) => {
         const card = document.createElement("div");
-        card.className = "task-card";
+        card.className = t.completada ? "task-card task-completed" : "task-card";
 
         const row = document.createElement("div");
         row.className = "task-row";
@@ -58,7 +69,7 @@ function renderTasks(tareas) {
         desc.textContent = t.descripcion || "";
 
         const estado = document.createElement("div");
-        estado.className = t.completada ? "completada" : "pendiente";
+        estado.className = `estado-tag ${t.completada ? "completada" : "pendiente"}`;
         estado.textContent = t.completada ? "Completada" : "Pendiente";
 
         info.appendChild(titulo);
@@ -68,38 +79,11 @@ function renderTasks(tareas) {
         const actions = document.createElement("div");
         actions.className = "task-actions";
 
-        // Botón editar
+        // Botón editar (NUEVO: Ahora llama a abrirModalEditar)
         const btnEdit = document.createElement("button");
         btnEdit.textContent = "Editar";
         btnEdit.className = "btn-secondary";
-        btnEdit.addEventListener("click", async () => {
-            const nuevoTitulo = prompt("Nuevo título:", t.titulo);
-            if (nuevoTitulo === null) return; // cancelar
-            const tituloLimpio = nuevoTitulo.trim();
-            if (!tituloLimpio) {
-                setMensaje("El título no puede estar vacío", false);
-                return;
-            }
-
-            const nuevaDesc = prompt("Nueva descripción:", t.descripcion || "");
-            if (nuevaDesc === null) return; // cancelar
-
-            const { response, data } = await apiFetch(`/tasks/${t.id_tarea}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    titulo: tituloLimpio,
-                    descripcion: (nuevaDesc || "").trim()
-                })
-            });
-
-            if (response.ok) {
-                setMensaje("Tarea actualizada", true);
-                await cargarTareas();
-            } else {
-                setMensaje((data && data.error) ? data.error : "Error al editar", false);
-            }
-        });
+        btnEdit.addEventListener("click", () => abrirModalEditar(t));
 
         // Botón completar
         const btnComplete = document.createElement("button");
@@ -118,24 +102,11 @@ function renderTasks(tareas) {
             }
         });
 
-        // Botón borrar
+        // Botón borrar (NUEVO: Ahora llama a abrirModalBorrar)
         const btnDelete = document.createElement("button");
         btnDelete.textContent = "Borrar";
         btnDelete.className = "btn-danger";
-        btnDelete.addEventListener("click", async () => {
-            const ok = confirm("¿Seguro que quieres borrar esta tarea?");
-            if (!ok) return;
-
-            const { response } = await apiFetch(`/tasks/${t.id_tarea}`, {
-                method: "DELETE"
-            });
-            if (response.ok) {
-                setMensaje("Tarea eliminada", true);
-                await cargarTareas();
-            } else {
-                setMensaje("Error al borrar", false);
-            }
-        });
+        btnDelete.addEventListener("click", () => abrirModalBorrar(t));
 
         actions.appendChild(btnEdit);
         actions.appendChild(btnComplete);
@@ -179,4 +150,81 @@ logoutBtn.addEventListener("click", async () => {
     window.location.href = "login.html";
 });
 
+// =========================================
+// FUNCIONES PARA MODALES (NUEVO)
+// =========================================
+
+function cerrarModal(modalId) {
+    document.getElementById(modalId).classList.remove('open');
+}
+
+// --- EDICIÓN ---
+
+function abrirModalEditar(tarea) {
+    // Rellenar el modal con los datos actuales
+    document.getElementById('editTaskId').value = tarea.id_tarea;
+    document.getElementById('editTitulo').value = tarea.titulo;
+    document.getElementById('editDescripcion').value = tarea.descripcion || "";
+    
+    // Abrir el modal
+    editModal.classList.add('open');
+}
+
+async function guardarEdicion() {
+    const id = document.getElementById('editTaskId').value;
+    const nuevoTitulo = document.getElementById('editTitulo').value.trim();
+    const nuevaDesc = document.getElementById('editDescripcion').value.trim();
+
+    if (!nuevoTitulo) {
+        setMensaje("El título no puede estar vacío", false);
+        return;
+    }
+
+    const { response, data } = await apiFetch(`/tasks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            titulo: nuevoTitulo,
+            descripcion: nuevaDesc
+            
+        })
+    });
+
+    if (response.ok) {
+        cerrarModal('editModal');
+        setMensaje("Tarea actualizada", true);
+        await cargarTareas();
+    } else {
+        setMensaje((data && data.error) ? data.error : "Error al editar", false);
+    }
+}
+
+// --- BORRADO ---
+
+function abrirModalBorrar(tarea) {
+    // Rellenar el modal con los datos
+    document.getElementById('deleteTaskId').value = tarea.id_tarea;
+    document.getElementById('deleteTaskTitle').textContent = tarea.titulo;
+    
+    // Abrir el modal
+    deleteModal.classList.add('open');
+}
+
+async function confirmarBorrado() {
+    const id = document.getElementById('deleteTaskId').value;
+
+    const { response } = await apiFetch(`/tasks/${id}`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        cerrarModal('deleteModal');
+        setMensaje("Tarea eliminada", true);
+        await cargarTareas();
+    } else {
+        setMensaje("Error al borrar", false);
+    }
+}
+
+// Iniciar
 cargarTareas();
