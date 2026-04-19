@@ -79,7 +79,7 @@ function renderTasks(tareas) {
         const actions = document.createElement("div");
         actions.className = "task-actions";
 
-        // Botón editar (NUEVO: Ahora llama a abrirModalEditar)
+        // Botón editar
         const btnEdit = document.createElement("button");
         btnEdit.textContent = "Editar";
         btnEdit.className = "btn-secondary";
@@ -102,7 +102,7 @@ function renderTasks(tareas) {
             }
         });
 
-        // Botón borrar (NUEVO: Ahora llama a abrirModalBorrar)
+        // Botón borrar
         const btnDelete = document.createElement("button");
         btnDelete.textContent = "Borrar";
         btnDelete.className = "btn-danger";
@@ -150,15 +150,13 @@ logoutBtn.addEventListener("click", async () => {
     window.location.href = "login.html";
 });
 
-// =========================================
-// FUNCIONES PARA MODALES (NUEVO)
-// =========================================
+// Funciones para modales
 
 function cerrarModal(modalId) {
     document.getElementById(modalId).classList.remove('open');
 }
 
-// --- EDICIÓN ---
+// Edición 
 
 function abrirModalEditar(tarea) {
     // Rellenar el modal con los datos actuales
@@ -199,7 +197,7 @@ async function guardarEdicion() {
     }
 }
 
-// --- BORRADO ---
+// Borrado 
 
 function abrirModalBorrar(tarea) {
     // Rellenar el modal con los datos
